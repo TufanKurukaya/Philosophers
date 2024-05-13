@@ -1,10 +1,13 @@
 NAME = philo
+
 CC = cc
+
 CFLAGS = -g -Wall -Wextra -Werror
-SRCS =	src/main.c	\
-		src/utils.c	\
+
+SRCS =	src/main.c			\
+		src/utils.c			\
 		src/set_values.c	\
-		src/exit.c	\
+		src/exit.c			\
 
 OBJ_DIR = objs
 
