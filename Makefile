@@ -8,6 +8,7 @@ SRCS =	src/main.c			\
 		src/utils.c			\
 		src/set_values.c	\
 		src/exit.c			\
+		src/philo.c			\
 
 OBJ_DIR = objs
 

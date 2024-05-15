@@ -6,7 +6,7 @@
 /*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:00:51 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/05/13 14:15:23 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:23:34 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				eat_count;
 	long long		start_time;
-	pthread_mutex_t	m_table;
 	int				*table;
-	pthread_t		*thread;
+	pthread_mutex_t	m_table;
+	pthread_mutex_t	m_print;
+	pthread_mutex_t	m_eat;
+	pthread_mutex_t *m_forks;
 	struct s_philo	*philo;
 }					t_data;
 
@@ -35,15 +37,17 @@ typedef struct s_philo
 	int				eat_count;
 	long long		last_eat;
 	int				fork[2];
+	pthread_t		thread;
 	struct s_data	*data;
 }					t_philo;
 
-int					create_table(t_data *data);
-int					ft_atoi(const char *str);
 int					ft_isdigit(int c);
+int					ft_atoi(const char *str);
+int					create_philo(t_data *data);
+int					create_table(t_data *data);
 int					set_values(t_data *data, char **av);
-long long			get_time(void);
 void				ft_free(char *str, t_data *data);
 void				*ft_calloc(size_t count, size_t size);
+long long			get_time(void);
 
 #endif

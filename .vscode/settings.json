@@ -5,6 +5,7 @@
 		"__bit_reference": "c",
 		"__string": "c",
 		"cstring": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"__threading_support": "c"
 	}
 }

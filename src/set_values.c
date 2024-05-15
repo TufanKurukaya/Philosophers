@@ -6,7 +6,7 @@
 /*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:13:22 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/05/13 14:36:08 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:44:48 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	*philo_funk(void *arg)
-{
-	t_data	*data;
 
-	data = (t_data *)arg;
-	pthread_mutex_lock(&data->m_table);
-	return (NULL);
-}
-
-void	check_forks(t_data *data)
-{
-}
 
 int	create_table(t_data *data)
 {
 	int	i;
 
 	i = -1;
-	data->table = ft_calloc(sizeof(int), data->philo_count);
+	data->table = ft_calloc(sizeof(int), data->philo_count + 1000000);
 	if (!data->table)
 		return (1);
 	while (++i < data->philo_count)
@@ -65,7 +54,6 @@ int	set_values(t_data *data, char **av)
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
-	data->eat_count = -1;
 	if (av[5])
 		data->eat_count = ft_atoi(av[5]);
 	data->start_time = get_time();
@@ -73,7 +61,7 @@ int	set_values(t_data *data, char **av)
 	if (!data->philo)
 		return (1);
 	data->philo = ft_calloc(sizeof(pthread_t), data->philo_count);
-	if (!data->thread)
+	if (!data->philo)
 		return (1);
 	set_philo_value(data);
 	if (create_table(data))

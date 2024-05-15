@@ -6,7 +6,7 @@
 /*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 12:13:19 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/05/13 14:15:29 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:01:42 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,5 @@ void	ft_free(char *str, t_data *data)
 		free(data->philo);
 	if (data->table)
 		free(data->table);
-	if (data->thread)
-		free(data->thread);
 	ft_putstr_fd(str, 2);
 }
