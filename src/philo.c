@@ -6,7 +6,7 @@
 /*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:45:32 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/05/15 12:29:48 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:45:24 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+void	check_forks(t_philo *philo);
+
 void	waiting_area(t_philo *philo)
 {
-
+	pthread_mutex_lock(&philo->data->m_table);
+	usleep(100);
+	pthread_mutex_unlock(&philo->data->m_table);
+	check_forks(philo);
 }
 
 void	print_funk(char *str, t_philo *philo)
@@ -29,11 +34,35 @@ void	print_funk(char *str, t_philo *philo)
 
 void	eat(t_philo *philo)
 {
+	print_funk("is eating\n", philo);
+	philo->last_eat = get_time();
+	philo->eat_count = 0;
 }
 
 void	check_forks(t_philo *philo)
 {
-	
+	t_data	*data;
+
+	data = philo->data;
+	if (data->table[philo->fork[0]])
+	{
+		pthread_mutex_lock(&data->m_forks);
+		philo->fork[0] = 0;
+		if (data->table[philo->fork[1]])
+		{
+			pthread_mutex_lock(&data->m_forks);
+			philo->fork[1] = 0;
+			eat(philo);
+			pthread_mutex_unlock(&data->m_forks);
+		}
+		else
+		{
+			pthread_mutex_unlock(&data->m_forks);
+			waiting_area(philo);
+		}
+	}
+	else
+		waiting_area(philo);
 }
 
 void	*philo_funk(void *arg)
@@ -58,6 +87,11 @@ int	create_philo(t_data *data)
 		if (pthread_create(&data->philo[i].thread, NULL, philo_funk,
 				&data->philo[i]))
 			return (1);
+	while (1)
+	{
+		if (data->eat_count == 0)
+			break ;
+	}
 	i = -1;
 	while (++i < data->philo_count)
 		if (pthread_join(data->philo[i].thread, NULL))

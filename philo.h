@@ -6,7 +6,7 @@
 /*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:00:51 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/05/15 12:23:34 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:43:22 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_data
 	pthread_mutex_t	m_table;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_eat;
-	pthread_mutex_t *m_forks;
+	pthread_mutex_t m_forks;
 	struct s_philo	*philo;
 }					t_data;
 
