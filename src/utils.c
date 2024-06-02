@@ -5,63 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 12:40:20 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/05/13 12:40:46 by tkurukay         ###   ########.fr       */
+/*   Created: 2024/06/02 22:17:00 by tkurukay          #+#    #+#             */
+/*   Updated: 2024/06/02 22:32:39 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-#include <string.h>
-#include <stdlib.h>
-#include <sys/time.h>
 
-long long	get_time(void)
+int	check_args(int argc, char **argv)
 {
-	struct timeval	time;
+	int	i;
 
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
+	i = 1;
+	while (i < argc)
+	{
+		if ((ft_strlen(argv[i]) > 10) || (ft_atoi(argv[i]) <= 0))
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
 int	ft_atoi(const char *str)
 {
-	int	sing;
-	int	result;
+	int		i;
+	long	nbr;
 
-	sing = 1;
-	result = 0;
-	while (*str == 32 || (*str <= 13 && *str >= 9))
-		str++;
-	if (*str == '-' || *str == '+')
+	i = 0;
+	nbr = 0;
+	if (!ft_isdigit(str[i]))
+		return (-1);
+	while (ft_isdigit(str[i]))
 	{
-		if (*str == '-')
-		{
-			sing = sing * (-1);
-		}
-		str++;
+		nbr = nbr * 10 + (str[i++] - '0');
+		if (nbr > 2147483647)
+			return (-1);
 	}
-	while (ft_isdigit(*str))
-	{
-		result = (result * 10) + (*str - '0');
-		str++;
-	}
-	return (result * sing);
+	return (nbr);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+int	ft_isdigit(int c)
 {
-	void	*ptr;
+	return (c >= '0' && c <= '9');
+}
 
-	ptr = malloc(count * size);
-	if (!ptr)
-		return (NULL);
-	memset(ptr, 0, count * size);
-	return (ptr);
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

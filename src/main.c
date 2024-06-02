@@ -5,69 +5,108 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 12:13:13 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/05/14 13:58:30 by tkurukay         ###   ########.fr       */
+/*   Created: 2024/06/02 22:05:07 by tkurukay          #+#    #+#             */
+/*   Updated: 2024/06/02 22:52:56 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 #include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
 
-void	init_data(t_data *data)
+int	die_control(t_philo *philo)
 {
-	data->philo_count = 0;
-	data->time_to_die = 0;
-	data->time_to_eat = 0;
-	data->time_to_sleep = 0;
-	data->eat_count = -1;
-	data->start_time = 0;
-	data->table = NULL;
-	data->philo = NULL;
-}
-
-
-int	check_args_values(char *av)
-{
-	int	i;
-
-	i = 1;
-	while (av[i])
+	pthread_mutex_lock(&philo->data->print);
+	if (philo->data->philo_dead)
 	{
-		if (ft_atoi(av) <= 0)
-			return (0);
-		if (!ft_isdigit(av[i]))
-			return (0);
-		i++;
+		pthread_mutex_unlock(&philo->data->print);
+		return (1);
 	}
-	return (1);
+	pthread_mutex_unlock(&philo->data->print);
+	return (0);
 }
 
-int	check_args(int ac, char **av)
+void	philo_life(t_philo *ph, t_data *data)
 {
-	int	i;
-
-	if (ac < 2)
-		return (0);
-	if (ac < 5 || ac > 6)
-		return (0);
-	i = 0;
-	while (av[++i])
-		if (!check_args_values(av[i]))
-			return (0);
-	return (1);
+	if (ph->id % 2)
+		ft_usleep(data->eat_time);
+	while ((data->must_eat != -1 && ph->eat_count == data->must_eat) != 1)
+	{
+		if (die_control(ph))
+			break ;
+		if (philo_take_forks(ph))
+			break ;
+		if (die_control(ph))
+			break ;
+		philo_eat(ph);
+		if (die_control(ph))
+			break ;
+		philo_sleep(ph);
+		if (die_control(ph))
+			break ;
+	}
 }
 
-int	main(int ac, char **av)
+void	*control_dead(void *arg)
+{
+	int		i;
+	t_data	*data;
+
+	data = arg;
+	pthread_mutex_lock(&data->die);
+	pthread_mutex_unlock(&data->die);
+	while (1)
+	{
+		i = -1;
+		while (++i < data->philo_count)
+		{
+			pthread_mutex_lock(&data->print);
+			if (data->philo_dead)
+			{
+				pthread_mutex_unlock(&data->print);
+				break ;
+			}
+			pthread_mutex_unlock(&data->print);
+			if (philo_check(&data->philos[i]))
+				break ;
+		}
+		if (i != data->philo_count)
+			break ;
+	}
+	return (NULL);
+}
+
+int	start_simulation(t_data *data)
+{
+	int			i;
+	pthread_t	control;
+
+	i = -1;
+	pthread_mutex_lock(&data->die);
+	if (pthread_create(&control, NULL, control_dead, data))
+		return (1);
+	else
+		while (++i < data->philo_count)
+			if (pthread_create(&data->philos[i].thread, NULL, waiting_area,
+					&data->philos[i]))
+				return (1);
+	if (philo_join(data))
+		return (1);
+	return (0);
+}
+
+int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (!check_args(ac, av))
-		return (1);
-	init_data(&data);
-	if (set_values(&data, av))
-		return (ft_free("Error\n", &data), 1);
-
-	if (create_philo(&data))
-		return (ft_free("Error\n", &data), 1);
+	if (argc < 5 || argc > 6)
+		return (ft_putstr_fd("Error: wrong number of arguments\n", 2), 1);
+	if (check_args(argc, argv))
+		return (ft_putstr_fd("Error: wrong argument\n", 2), 1);
+	if (init_data(&data, argc, argv))
+		return (ft_putstr_fd("Error: malloc error\n", 2), 1);
+	if (start_simulation(&data))
+		return (ft_putstr_fd("Error: thread error\n", 2), 1);
+	free_data(&data);
+	return (0);
 }

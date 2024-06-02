@@ -1,33 +1,34 @@
-NAME = philo
+NAME	= philo
+CC		= cc
+RM		= rm -rf
+CFLAGS	= -g -Wall -Wextra -Werror #-fsanitize=thread -pthread
 
-CC = cc
-
-CFLAGS = -g -Wall -Wextra -Werror
-
-SRCS =	src/main.c			\
-		src/utils.c			\
-		src/set_values.c	\
-		src/exit.c			\
-		src/philo.c			\
+SRC =	src/free.c \
+		src/init.c \
+		src/main.c \
+		src/situation.c \
+		src/simulation.c \
+		src/utils.c \
+		src/utils1.c
 
 OBJ_DIR = objs
 
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 all : $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 $(OBJ_DIR)/%.o : %.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJ_DIR)
+	@$(RM) $(OBJ_DIR)
 
 fclean: clean
-	@rm -rf $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 
