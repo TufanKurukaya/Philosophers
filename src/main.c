@@ -6,7 +6,7 @@
 /*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:07 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/02 22:52:56 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/06/02 23:20:31 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ void	*control_dead(void *arg)
 
 int	start_simulation(t_data *data)
 {
-	int			i;
-	pthread_t	control;
+	int	i;
 
 	i = -1;
 	pthread_mutex_lock(&data->die);
-	if (pthread_create(&control, NULL, control_dead, data))
+	if (pthread_create(&data->philos[data->philo_count].thread, NULL,
+			control_dead, data))
 		return (1);
 	else
 		while (++i < data->philo_count)
