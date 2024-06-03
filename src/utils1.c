@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:28 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/02 22:38:24 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:16:32 by  tkurukay        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	print_status(t_philo *philo, char *status)
 		return ;
 	}
 	pthread_mutex_lock(&philo->data->time);
-	printf("%lu	%d	%s", (get_time() - philo->data->start), philo->id, status);
+	printf("%llu	%d	%s", (get_time() - philo->data->start), philo->id,
+		status);
 	pthread_mutex_unlock(&philo->data->time);
 	pthread_mutex_unlock(&philo->data->print);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   situation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:14 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/02 23:14:57 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:12:23 by  tkurukay        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,6 @@ int	philo_join(t_data *data)
 int	philo_check(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->time);
-	if (philo->data->must_eat != -1
-		&& philo->data->must_eat == philo->eat_count)
-	{
-		pthread_mutex_lock(&philo->data->time);
-		return (1);
-	}
 	if (philo->last_eat == 0)
 		philo->last_eat = philo->data->start;
 	if (philo->data->die_time <= get_time() - philo->last_eat)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:07 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/02 23:20:31 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:16:07 by  tkurukay        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@
 int	die_control(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->print);
-	if (philo->data->philo_dead)
+	pthread_mutex_lock(&philo->data->time);
+	if (philo->data->philo_dead || (philo->data->must_eat != -1
+			&& philo->eat_count == philo->data->must_eat))
 	{
+		pthread_mutex_unlock(&philo->data->time);
 		pthread_mutex_unlock(&philo->data->print);
 		return (1);
 	}
+	pthread_mutex_unlock(&philo->data->time);
 	pthread_mutex_unlock(&philo->data->print);
 	return (0);
 }
@@ -35,8 +39,6 @@ void	philo_life(t_philo *ph, t_data *data)
 		if (die_control(ph))
 			break ;
 		if (philo_take_forks(ph))
-			break ;
-		if (die_control(ph))
 			break ;
 		philo_eat(ph);
 		if (die_control(ph))
@@ -60,13 +62,8 @@ void	*control_dead(void *arg)
 		i = -1;
 		while (++i < data->philo_count)
 		{
-			pthread_mutex_lock(&data->print);
-			if (data->philo_dead)
-			{
-				pthread_mutex_unlock(&data->print);
+			if (die_control(&data->philos[i]))
 				break ;
-			}
-			pthread_mutex_unlock(&data->print);
 			if (philo_check(&data->philos[i]))
 				break ;
 		}
