@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:11 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/02 22:07:55 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:31:32 by  tkurukay        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int	philo_take_forks(t_philo *philo)
 	}
 	pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
 	if (die_control(philo))
-	{
-		philo_drop_forks(philo);
-		return (1);
-	}
+		return (philo_drop_forks(philo), 1);
 	print_status(philo, "has taken a right fork\n");
 	return (0);
 }

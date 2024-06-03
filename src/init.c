@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:01 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/02 22:05:02 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:11:08 by  tkurukay        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 int	init_philos(t_data *data)
@@ -19,7 +18,7 @@ int	init_philos(t_data *data)
 	int	i;
 
 	i = -1;
-	data->philos = (t_philo *)malloc(sizeof(t_philo) * (data->philo_count + 1));
+	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->philo_count);
 	if (!data->philos)
 		return (1);
 	while (++i < data->philo_count)
@@ -31,8 +30,6 @@ int	init_philos(t_data *data)
 		data->philos[i].left_fork = i;
 		data->philos[i].right_fork = (i + 1) % data->philo_count;
 	}
-	data->philos[i].id = -1;
-	data->philos[i].data = data;
 	return (0);
 }
 
@@ -51,13 +48,13 @@ int	init_mutex(t_data *data)
 			return (1);
 		i++;
 	}
-	if (pthread_mutex_init(&data->print, NULL))
+	if (pthread_mutex_init(&data->m_check, NULL))
 		return (1);
 	if (pthread_mutex_init(&data->time, NULL))
 		return (1);
-	if (pthread_mutex_init(&data->mut, NULL))
+	if (pthread_mutex_init(&data->mtx, NULL))
 		return (1);
-	if (pthread_mutex_init(&data->die, NULL))
+	if (pthread_mutex_init(&data->m_start, NULL))
 		return (1);
 	return (0);
 }

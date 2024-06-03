@@ -6,34 +6,32 @@
 /*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:07 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 13:16:07 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/03 16:11:08 by  tkurukay        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-#include <stdio.h>
-#include <unistd.h>
 
 int	die_control(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->print);
+	pthread_mutex_lock(&philo->data->m_check);
 	pthread_mutex_lock(&philo->data->time);
 	if (philo->data->philo_dead || (philo->data->must_eat != -1
 			&& philo->eat_count == philo->data->must_eat))
 	{
 		pthread_mutex_unlock(&philo->data->time);
-		pthread_mutex_unlock(&philo->data->print);
+		pthread_mutex_unlock(&philo->data->m_check);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->data->time);
-	pthread_mutex_unlock(&philo->data->print);
+	pthread_mutex_unlock(&philo->data->m_check);
 	return (0);
 }
 
 void	philo_life(t_philo *ph, t_data *data)
 {
 	if (ph->id % 2)
-		ft_usleep(data->eat_time);
+		ft_usleep(data->eat_time / 2);
 	while ((data->must_eat != -1 && ph->eat_count == data->must_eat) != 1)
 	{
 		if (die_control(ph))
@@ -55,8 +53,8 @@ void	*control_dead(void *arg)
 	t_data	*data;
 
 	data = arg;
-	pthread_mutex_lock(&data->die);
-	pthread_mutex_unlock(&data->die);
+	pthread_mutex_lock(&data->m_start);
+	pthread_mutex_unlock(&data->m_start);
 	while (1)
 	{
 		i = -1;
@@ -75,12 +73,12 @@ void	*control_dead(void *arg)
 
 int	start_simulation(t_data *data)
 {
-	int	i;
+	int			i;
+	pthread_t	thread;
 
 	i = -1;
-	pthread_mutex_lock(&data->die);
-	if (pthread_create(&data->philos[data->philo_count].thread, NULL,
-			control_dead, data))
+	pthread_mutex_lock(&data->m_start);
+	if (pthread_create(&thread, NULL, control_dead, data))
 		return (1);
 	else
 		while (++i < data->philo_count)
@@ -88,6 +86,8 @@ int	start_simulation(t_data *data)
 					&data->philos[i]))
 				return (1);
 	if (philo_join(data))
+		return (1);
+	if (pthread_join(thread, NULL))
 		return (1);
 	return (0);
 }

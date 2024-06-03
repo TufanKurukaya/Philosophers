@@ -1,7 +1,7 @@
 NAME	= philo
 CC		= cc
 RM		= rm -rf
-CFLAGS	= -g -Wall -Wextra -Werror #-fsanitize=thread -pthread
+CFLAGS	= -Wall -Wextra -Werror #-fsanitize=thread -pthread
 
 SRC =	src/free.c \
 		src/init.c \
@@ -11,7 +11,7 @@ SRC =	src/free.c \
 		src/utils.c \
 		src/utils1.c
 
-OBJ_DIR = objs
+OBJ_DIR = .objs
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

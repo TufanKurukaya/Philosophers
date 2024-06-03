@@ -6,19 +6,18 @@
 /*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:14 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 13:12:23 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/03 16:11:08 by  tkurukay        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-#include <stdio.h>
 
 int	philo_dead(t_philo *philo)
 {
-	print_status(philo, "is dead\n");
-	pthread_mutex_lock(&philo->data->print);
+	print_status(philo, "is died\n");
+	pthread_mutex_lock(&philo->data->m_check);
 	philo->data->philo_dead = 1;
-	pthread_mutex_unlock(&philo->data->print);
+	pthread_mutex_unlock(&philo->data->m_check);
 	return (1);
 }
 
@@ -28,17 +27,17 @@ int	philo_join(t_data *data)
 
 	while (1)
 	{
-		pthread_mutex_lock(&data->mut);
+		pthread_mutex_lock(&data->mtx);
 		if (data->ready_count == data->philo_count)
 		{
 			pthread_mutex_lock(&data->time);
 			data->start = get_time();
 			pthread_mutex_unlock(&data->time);
-			pthread_mutex_unlock(&data->die);
-			pthread_mutex_unlock(&data->mut);
+			pthread_mutex_unlock(&data->m_start);
+			pthread_mutex_unlock(&data->mtx);
 			break ;
 		}
-		pthread_mutex_unlock(&data->mut);
+		pthread_mutex_unlock(&data->mtx);
 	}
 	i = -1;
 	while (++i < data->philo_count + 1)
@@ -65,11 +64,11 @@ void	*waiting_area(void *arg)
 
 	philo = (t_philo *)arg;
 	data = philo->data;
-	pthread_mutex_lock(&data->mut);
+	pthread_mutex_lock(&data->mtx);
 	data->ready_count++;
-	pthread_mutex_unlock(&data->mut);
-	pthread_mutex_lock(&data->die);
-	pthread_mutex_unlock(&data->die);
+	pthread_mutex_unlock(&data->mtx);
+	pthread_mutex_lock(&data->m_start);
+	pthread_mutex_unlock(&data->m_start);
 	philo_life(philo, data);
 	return (NULL);
 }

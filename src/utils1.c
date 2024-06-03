@@ -6,7 +6,7 @@
 /*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:28 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 13:16:32 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/03 16:11:08 by  tkurukay        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ void	ft_putstr_fd(char *s, int fd)
 
 void	print_status(t_philo *philo, char *status)
 {
-	pthread_mutex_lock(&philo->data->print);
+	pthread_mutex_lock(&philo->data->m_check);
 	if (philo->data->philo_dead)
 	{
-		pthread_mutex_unlock(&philo->data->print);
+		pthread_mutex_unlock(&philo->data->m_check);
 		return ;
 	}
 	pthread_mutex_lock(&philo->data->time);
 	printf("%llu	%d	%s", (get_time() - philo->data->start), philo->id,
-		status);
+				status);
 	pthread_mutex_unlock(&philo->data->time);
-	pthread_mutex_unlock(&philo->data->print);
+	pthread_mutex_unlock(&philo->data->m_check);
 }
