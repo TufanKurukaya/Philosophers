@@ -6,7 +6,7 @@
 /*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:07 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 13:40:29 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:50:15 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	die_control(t_philo *philo)
 
 void	philo_life(t_philo *ph, t_data *data)
 {
-	if (ph->id % 2)
+	if (!(ph->id % 2))
 		ft_usleep(data->eat_time / 2);
 	while ((data->must_eat != -1 && ph->eat_count == data->must_eat) != 1)
 	{

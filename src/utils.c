@@ -6,7 +6,7 @@
 /*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:17:00 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 15:25:32 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:51:24 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_atoi(const char *str)
 	i = -1;
 	nbr = 0;
 	while (str[++i])
-		if (ft_isdigit(str[i]))
+		if (!ft_isdigit(str[i]))
 			return (-1);
 	i = 0;
 	while (ft_isdigit(str[i]))
