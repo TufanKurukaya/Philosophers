@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:17:00 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/02 22:32:39 by tkurukay         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:25:32 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ int	ft_atoi(const char *str)
 	int		i;
 	long	nbr;
 
-	i = 0;
+	i = -1;
 	nbr = 0;
-	if (!ft_isdigit(str[i]))
-		return (-1);
+	while (str[++i])
+		if (ft_isdigit(str[i]))
+			return (-1);
+	i = 0;
 	while (ft_isdigit(str[i]))
 	{
 		nbr = nbr * 10 + (str[i++] - '0');
