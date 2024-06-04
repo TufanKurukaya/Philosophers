@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:11 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 12:53:51 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/05 00:56:44 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	philo_take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
 	print_status(philo, "has taken a left fork\n");
+	if (die_control(philo))
+		return (pthread_mutex_unlock(&philo->data->forks[philo->left_fork]), 1);
 	if (philo->data->philo_count == 1)
 	{
 		pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
