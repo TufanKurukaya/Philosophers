@@ -6,7 +6,7 @@
 /*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:14 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 13:03:16 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:30:33 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	philo_dead(t_philo *philo)
 
 int	philo_join(t_data *data)
 {
-	int	i;
+	unsigned int	i;
 
 	while (1)
 	{

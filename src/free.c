@@ -6,7 +6,7 @@
 /*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:51:54 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 13:13:12 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:28:44 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	free_data(t_data *data)
 
 int	free_mutex(t_data *data)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < data->philo_count)

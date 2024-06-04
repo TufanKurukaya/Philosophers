@@ -6,7 +6,7 @@
 /*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:01 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 13:00:10 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:29:17 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	init_philos(t_data *data)
 {
-	int	i;
+	unsigned int	i;
 
 	i = -1;
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->philo_count);
@@ -35,7 +35,7 @@ int	init_philos(t_data *data)
 
 int	init_mutex(t_data *data)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)

@@ -6,7 +6,7 @@
 /*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:07 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 13:07:06 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:40:29 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,12 @@ void	philo_life(t_philo *ph, t_data *data)
 
 void	*control_dead(void *arg)
 {
-	int		i;
-	t_data	*data;
+	unsigned int	i;
+	t_data			*data;
 
 	data = arg;
 	pthread_mutex_lock(&data->m_start);
 	pthread_mutex_unlock(&data->m_start);
-	ft_usleep(10);
 	while (1)
 	{
 		i = -1;
@@ -70,8 +69,8 @@ void	*control_dead(void *arg)
 
 int	start_simulation(t_data *data)
 {
-	int			i;
-	pthread_t	thread;
+	unsigned int	i;
+	pthread_t		thread;
 
 	i = -1;
 	pthread_mutex_lock(&data->m_start);
