@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
+/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:01 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 16:11:08 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/04 13:00:10 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

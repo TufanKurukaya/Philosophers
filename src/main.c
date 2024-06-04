@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
+/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:07 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 16:11:08 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/04 13:07:06 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,9 @@ void	philo_life(t_philo *ph, t_data *data)
 		ft_usleep(data->eat_time / 2);
 	while ((data->must_eat != -1 && ph->eat_count == data->must_eat) != 1)
 	{
-		if (die_control(ph))
-			break ;
 		if (philo_take_forks(ph))
 			break ;
 		philo_eat(ph);
-		if (die_control(ph))
-			break ;
 		philo_sleep(ph);
 		if (die_control(ph))
 			break ;
@@ -55,6 +51,7 @@ void	*control_dead(void *arg)
 	data = arg;
 	pthread_mutex_lock(&data->m_start);
 	pthread_mutex_unlock(&data->m_start);
+	ft_usleep(10);
 	while (1)
 	{
 		i = -1;

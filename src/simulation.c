@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
+/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:11 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 15:31:32 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/04 12:53:51 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int	philo_eat(t_philo *philo)
 	philo->eat_count++;
 	philo->last_eat = get_time();
 	pthread_mutex_unlock(&philo->data->time);
-	pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
-	pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
+	philo_drop_forks(philo);
 	return (0);
 }
 

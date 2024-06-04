@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
+/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:54 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 16:11:17 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/04 13:14:26 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int				ready_count;
-	int				philo_count;
+	unsigned int	philo_count;
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;

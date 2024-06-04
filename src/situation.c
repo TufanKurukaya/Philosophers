@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   situation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
+/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:14 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 16:11:08 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/04 13:03:16 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	philo_join(t_data *data)
 		pthread_mutex_unlock(&data->mtx);
 	}
 	i = -1;
-	while (++i < data->philo_count + 1)
+	while (++i < data->philo_count)
 		if (pthread_join(data->philos[i].thread, NULL))
 			return (1);
 	return (0);

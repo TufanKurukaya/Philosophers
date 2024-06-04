@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  tkurukay < tkurukay@student.42kocaeli.com +#+  +:+       +#+        */
+/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:51:54 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/03 16:11:08 by  tkurukay        ###   ########.fr       */
+/*   Updated: 2024/06/04 13:13:12 by idelemen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	free_mutex(t_data *data)
 	pthread_mutex_destroy(&data->time);
 	pthread_mutex_destroy(&data->m_start);
 	pthread_mutex_destroy(&data->mtx);
-	free(data->forks);
+	if (data->forks)
+		free(data->forks);
 	return (1);
 }
