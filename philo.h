@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: tkurukay <tkurukay@student.42kocaeli.com.t +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:54 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 13:30:47 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:12:31 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ typedef struct s_data
 // free.c
 int					free_data(t_data *data);
 int					free_mutex(t_data *data);
+int					error_init(t_data *data, int len, int m_num);
+int					error_create(t_data *data, int len);
+
 // init.c
 int					init_philos(t_data *data);
 int					init_mutex(t_data *data);

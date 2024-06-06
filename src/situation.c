@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   situation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: tkurukay <tkurukay@student.42kocaeli.com.t +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:14 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 13:30:33 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:12:34 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	philo_dead(t_philo *philo)
 int	philo_join(t_data *data)
 {
 	unsigned int	i;
+	int				exit_code;
 
+	exit_code = 0;
 	while (1)
 	{
 		pthread_mutex_lock(&data->mtx);
@@ -42,8 +44,8 @@ int	philo_join(t_data *data)
 	i = -1;
 	while (++i < data->philo_count)
 		if (pthread_join(data->philos[i].thread, NULL))
-			return (1);
-	return (0);
+			exit_code = 1;
+	return (exit_code);
 }
 
 int	philo_check(t_philo *philo)
