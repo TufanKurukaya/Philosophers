@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:01 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 13:29:17 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:40:27 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ int	init_mutex(t_data *data)
 	while (i < data->philo_count)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
-			return (1);
+			return (error_init(data, i, 0));
 		i++;
 	}
 	if (pthread_mutex_init(&data->m_check, NULL))
 		return (1);
 	if (pthread_mutex_init(&data->time, NULL))
-		return (1);
+		return (error_init(data, i, 1));
 	if (pthread_mutex_init(&data->mtx, NULL))
-		return (1);
+		return (error_init(data, i, 2));
 	if (pthread_mutex_init(&data->m_start, NULL))
-		return (1);
+		return (error_init(data, i, 3));
 	return (0);
 }
 
@@ -71,9 +71,11 @@ int	init_data(t_data *data, int argc, char **argv)
 		data->must_eat = ft_atoi(argv[5]);
 	data->philo_dead = 0;
 	data->start = 0;
+	data->philos = NULL;
+	data->forks = NULL;
 	if (init_mutex(data))
 		return (1);
 	if (init_philos(data))
-		return (1);
+		return (free_data(data), 1);
 	return (0);
 }

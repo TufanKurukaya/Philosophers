@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idelemen <idelemen@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: tkurukay <tkurukay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:05:07 by tkurukay          #+#    #+#             */
-/*   Updated: 2024/06/04 16:50:15 by idelemen         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:36:31 by tkurukay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 int	die_control(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->m_check);
-	pthread_mutex_lock(&philo->data->time);
-	if (philo->data->philo_dead || (philo->data->must_eat != -1
-			&& philo->eat_count == philo->data->must_eat))
+	if (philo->data->philo_dead)
 	{
-		pthread_mutex_unlock(&philo->data->time);
 		pthread_mutex_unlock(&philo->data->m_check);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->data->time);
 	pthread_mutex_unlock(&philo->data->m_check);
 	return (0);
 }
@@ -80,9 +76,9 @@ int	start_simulation(t_data *data)
 		while (++i < data->philo_count)
 			if (pthread_create(&data->philos[i].thread, NULL, waiting_area,
 					&data->philos[i]))
-				return (1);
+				return (error_create(data, i));
 	if (philo_join(data))
-		return (1);
+		return (pthread_join(thread, NULL) || 1);
 	if (pthread_join(thread, NULL))
 		return (1);
 	return (0);
@@ -94,12 +90,12 @@ int	main(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 		return (ft_putstr_fd("Error: wrong number of arguments\n", 2), 1);
-	if (check_args(argc, argv))
+	else if (check_args(argc, argv))
 		return (ft_putstr_fd("Error: wrong argument\n", 2), 1);
-	if (init_data(&data, argc, argv))
-		return (ft_putstr_fd("Error: malloc error\n", 2), 1);
-	if (start_simulation(&data))
-		return (ft_putstr_fd("Error: thread error\n", 2), 1);
+	else if (init_data(&data, argc, argv))
+		return (ft_putstr_fd("Error: initialization failed\n", 2), 1);
+	else if (start_simulation(&data))
+		return (ft_putstr_fd("Error: thread error\n", 2), free_data(&data), 1);
 	free_data(&data);
 	return (0);
 }
