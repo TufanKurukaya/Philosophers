@@ -2,4 +2,3 @@
 *.dSYM
 .vscode
 .objs
-philo
