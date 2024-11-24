@@ -18,7 +18,7 @@ int	philo_dead(t_philo *philo)
 	pthread_mutex_lock(&philo->data->m_check);
 	philo->data->philo_dead = 1;
 	pthread_mutex_unlock(&philo->data->m_check);
-	printf("%llu	%d	is died\n", get_time() - philo->data->start, philo->id);
+	printf("%lu	%d	is died\n", get_time() - philo->data->start, philo->id);
 	return (1);
 }
 

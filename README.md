@@ -10,7 +10,6 @@ Bu proje, klasik "Yemek Yiyen Filozoflar" probleminin bir uygulamasıdır. Proje
 - [Derleme](#derleme)
 - [Kullanım](#kullanım)
 - [Argümanlar](#argümanlar)
-- [Lisans](#lisans)
 
 ## Genel Bakış
 

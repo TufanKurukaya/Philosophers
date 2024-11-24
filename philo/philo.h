@@ -14,6 +14,7 @@
 # define PHILO_H
 
 # include <pthread.h>
+# include <sys/types.h>
 
 typedef struct s_philo
 {

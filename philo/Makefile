@@ -1,7 +1,7 @@
 NAME	= philo
 CC		= cc
 RM		= rm -rf
-CFLAGS	= -Wall -Wextra -Werror #-fsanitize=thread -pthread
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=thread -pthread -g
 
 SRC =	src/free.c \
 		src/init.c \

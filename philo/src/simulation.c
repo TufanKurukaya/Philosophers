@@ -34,16 +34,26 @@ int	philo_sleep(t_philo *philo)
 
 int	philo_take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
+	int first_fork;
+	int second_fork;
+
+	first_fork = philo->left_fork;
+	second_fork = philo->right_fork;
+	if (first_fork > second_fork)
+	{
+		first_fork = philo->right_fork;
+		second_fork = philo->left_fork;
+	}
+	pthread_mutex_lock(&philo->data->forks[first_fork]);
 	print_status(philo, "has taken a left fork\n");
 	if (die_control(philo))
-		return (pthread_mutex_unlock(&philo->data->forks[philo->left_fork]), 1);
+		return (pthread_mutex_unlock(&philo->data->forks[first_fork]), 1);
 	if (philo->data->philo_count == 1)
 	{
-		pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
+		pthread_mutex_unlock(&philo->data->forks[first_fork]);
 		return (ft_usleep(philo->data->die_time), 1);
 	}
-	pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
+	pthread_mutex_lock(&philo->data->forks[second_fork]);
 	if (die_control(philo))
 		return (philo_drop_forks(philo), 1);
 	print_status(philo, "has taken a right fork\n");
@@ -52,7 +62,17 @@ int	philo_take_forks(t_philo *philo)
 
 int	philo_drop_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
-	pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
+		int first_fork;
+	int second_fork;
+
+	first_fork = philo->left_fork;
+	second_fork = philo->right_fork;
+	if (first_fork > second_fork)
+	{
+		first_fork = philo->right_fork;
+		second_fork = philo->left_fork;
+	}
+	pthread_mutex_unlock(&philo->data->forks[first_fork]);
+	pthread_mutex_unlock(&philo->data->forks[second_fork]);
 	return (0);
 }
